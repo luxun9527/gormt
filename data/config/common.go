@@ -2,14 +2,10 @@ package config
 
 import (
 	"fmt"
-	"io/ioutil"
-	"path"
-
-	"github.com/xxjwxc/public/mylog"
-
 	"github.com/xxjwxc/public/dev"
 	"github.com/xxjwxc/public/tools"
 	"gopkg.in/yaml.v3"
+	"io/ioutil"
 )
 
 // CfgBase base config struct
@@ -52,23 +48,23 @@ var _map = Config{
 	IsOutFileByTableName: false,
 }
 
-var configPath string
+var ConfigPath string
 
 func init() {
-	configPath = path.Join(tools.GetCurrentDirectory(), "config.yml") // 先找本程序文件夹
-	if !tools.CheckFileIsExist(configPath) {                          // dont find it
-		configPath = path.Join(tools.GetModelPath(), "config.yml")
-		if !tools.CheckFileIsExist(configPath) {
-			mylog.ErrorString("config.yml not exit. using default config")
-		}
-	}
+	//ConfigPath = path.Join(tools.GetCurrentDirectory(), "config.yml") // 先找本程序文件夹
+	//if !tools.CheckFileIsExist(ConfigPath) {                          // dont find it
+	//	ConfigPath = path.Join(tools.GetModelPath(), "config.yml")
+	//	if !tools.CheckFileIsExist(ConfigPath) {
+	//		mylog.ErrorString("config.yml not exit. using default config")
+	//	}
+	//}
 
 	onInit()
 	dev.OnSetDev(_map.IsDev)
 }
 
 func onInit() {
-	err := InitFile(configPath)
+	err := InitFile(ConfigPath)
 	if err != nil {
 		fmt.Println("Load config file error: ", err.Error())
 		return
@@ -122,7 +118,7 @@ func SaveToFile() error {
 	if err != nil {
 		return err
 	}
-	tools.WriteFile(configPath, []string{
+	tools.WriteFile(ConfigPath, []string{
 		string(d),
 	}, true)
 	return nil

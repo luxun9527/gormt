@@ -34,7 +34,6 @@ func Execute() {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringP("host", "H", "", "数据库地址.(注意-H为大写)")
 	rootCmd.MarkFlagRequired("host")
@@ -70,7 +69,8 @@ func init() {
 	rootCmd.Flags().StringP("table_prefix", "t", "", "表前缀")
 	//add table name. 增加表名称
 	rootCmd.Flags().StringP("table_names", "b", "", "表名称")
-
+	rootCmd.PersistentFlags().StringVarP(&config.ConfigPath, "config_path", "z", "config/gormt.yaml", "配置文件路径")
+	cobra.OnInitialize(initConfig)
 }
 
 // initConfig reads in config file and ENV variables if set.
